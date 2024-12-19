@@ -1,23 +1,5 @@
-// const heading = document.createElement("h1");
-// heading.innerHTML = "Hi, this is Heading";
-
-// const para = document.createElement("p");
-// para.innerHTML = "This is Paragraph";
-
-// const root = document.getElementById("root");
-// root.appendChild(para);
-
-// const heading = React.createElement(
-//   "h1",
-//   { class: "head" },
-//   "Hi, this is React element"
-// );
-// console.log(heading);
-// // console.log(heading.props.children);
-
-// const root = ReactDOM.createRoot(document.getElementById("root"));
-
-// root.render(heading);
+import React from "react";
+import ReactDOM from "react-dom/client";
 
 const parent = React.createElement("div", { id: "parent" }, [
   React.createElement(
