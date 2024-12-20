@@ -5,7 +5,7 @@ const parent = React.createElement("div", { id: "parent" }, [
   React.createElement(
     "div",
     { id: "child" },
-    React.createElement("h2", {}, "Lorem ipsum dolor sit amet. - 1"),
+    React.createElement("h2", {}, "Lorem ipsum dolor sit amet. - 123456789"),
     React.createElement("p", {}, "this is para - 1")
   ),
   React.createElement(

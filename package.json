@@ -2,9 +2,10 @@
   "name": "react-latif",
   "version": "1.0.0",
   "description": "This is for React JS",
-  "main": "App.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "npx parcel index.html",
+    "build": "npx parcel build index.html"
   },
   "author": "Muhammad Razaullah",
   "license": "ISC",
