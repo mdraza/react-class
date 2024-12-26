@@ -1,3 +1,13 @@
-.head {
-  color: green;
+.main {
+  float: left;
+}
+
+.web {
+  width: 200px;
+  padding: 20px;
+  text-align: center;
+  border: 2px solid lightslategray;
+  border-radius: 8px;
+  float: left;
+  margin-left: 20px;
 }
