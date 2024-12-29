@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./src/App";
+import App from "./src/components/App";
 
 // JSX
 const heading = <h1 className="">Hi...This is Heading tag</h1>;
