@@ -1,17 +1,16 @@
 import ChildUser from "./ChildUser";
 
-function User({ user, chUser }) {
-  console.log(user);
+function User({ data }) {
+  // const {id, name, age, mobile} = data;
   return (
-    <div className="web">
-      <h1>User - {user}</h1>
-      <p>
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis,
-        voluptatibus?
-      </p>
-      <button>Read More</button>
-
-      <ChildUser chUser={chUser} />
+    <div>
+      {data.map((data) => (
+        <div className="web" key={data.id}>
+          <h2>{data.name}</h2>
+          <h4>Age: {data.age}</h4>
+          <h4>Mobile: {data.mobile}</h4>
+        </div>
+      ))}
     </div>
   );
 }

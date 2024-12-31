@@ -3,8 +3,9 @@
 }
 
 .web {
-  width: 200px;
+  /* width: 400px; */
   padding: 20px;
+  margin-bottom: 30px;
   text-align: center;
   border: 2px solid lightslategray;
   border-radius: 8px;
