@@ -3,12 +3,16 @@ import User from "./User";
 import Student from "./Student";
 import Employee from "./Employee";
 import NewStudent from "./NewStudent";
+import Post from "./Post";
+import StateUse from "./StateUse";
 
 function App() {
   return (
     <div>
       {/* <User data={arrObj} /> */}
-      <NewStudent />
+      {/* <NewStudent /> */}
+      {/* <Post /> */}
+      <StateUse />
     </div>
   );
 }
