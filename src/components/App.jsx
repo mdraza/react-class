@@ -1,77 +1,48 @@
-import React, { useState } from "react";
+import React from "react";
 
-const num = [2, 4, 5, 7];
-// const num = "vdsffsdf";
-// console.log(typeof num);
-// console.log(Array.isArray(num));
+function Header() {
+  return (
+    <div className="shadow-md">
+      <div className="flex justify-between mx-[100px] h-[70px] items-center">
+        <div className="w-[180px]">
+          <img
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSW91-cIAIp0c7Bne3kPYS3tAuFjsoqsVviAg&s"
+            alt="logo"
+          />
+        </div>
+        <div>
+          <ul className="flex gap-5 text-xl items-center cursor-pointer">
+            <li>Home</li>
+            <li>About</li>
+            <li>Contact</li>
+            <li>Cart</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+}
 
-const student = [
-  {
-    id: 1,
-    name: "Muhammad Raza",
-    studentId: 1234,
-  },
-  {
-    id: 2,
-    name: "Muhammad Aman",
-    studentId: 5874,
-  },
-  {
-    id: 3,
-    name: "Muhammad Saif",
-    studentId: 3547,
-  },
-];
+function Body() {
+  return (
+    <div className="mx-[100px] mt-8 flex justify-between">
+      <input
+        className="px-5 py-3 w-[90%] border-2 border-slate-300 rounded-md"
+        type="search"
+        placeholder="Search restaurant"
+      />
+      <button className="px-6 py-3 text-[18px] text-slate-50 rounded-md bg-orange-500 ">
+        Search
+      </button>
+    </div>
+  );
+}
 
 function App() {
-  const [fname, setFname] = useState("");
-
-  const handleName = (e) => {
-    setFname(e.target.value);
-    // console.log(e.target.value);
-    // console.log(e);
-  };
-
-  const handleShow = () => {
-    alert(`My name is ${fname}`);
-  };
-
   return (
-    <div className="mb-56 mx-[180px]">
-      <h1 className="text-5xl text-orange-800 text-center mt-10 bg-yellow-400 py-5 px-10">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis
-        molestias amet sequi quae aliquid. Vero eligendi error dolorem? Quis,
-        doloremque!
-      </h1>
-      <button className="t-5 ml-5 px-8 py-6 bg-blue-900 mt-4 text-white hover:text-blue-950 rounded-md hover:bg-cyan-300 transition-all">
-        Read more
-      </button>
-      <div className="m-10 w-64 h-[350px] bg-[#1268d0] rounded-[35px]"></div>
-      <br />
-      <div className="my-5 grid grid-cols-3 gap-4">
-        {student.map((student) => (
-          <div
-            key={student.id}
-            className="border-2 border-pink-500 rounded-md p-5"
-          >
-            <h2>{student.name}</h2>
-            <p>{student.studentId}</p>
-          </div>
-        ))}
-      </div>
-
-      <div className="my-5">
-        <form>
-          <input
-            value={fname}
-            onChange={handleName}
-            type="text"
-            className="px-5 w-[300px] py-4 border-2 border-slate-400"
-          />
-          <h1 className="mt-5 text-2xl">My name is {fname}</h1>
-          <button onClick={handleShow}>Click me</button>
-        </form>
-      </div>
+    <div>
+      <Header />
+      <Body />
     </div>
   );
 }
