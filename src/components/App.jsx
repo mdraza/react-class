@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { LOGO } from "../utils/constant";
+import { API_URL } from "../utils/constant";
+
 const restaurant = {
   id: "11091",
   name: "Pizza Hut",
@@ -60,14 +63,15 @@ const restaurant = {
 };
 
 function Header() {
+  const [login, setLogin] = useState(true);
+  function UserLogin() {
+    setLogin((user) => !user);
+  }
   return (
     <div className="shadow">
       <div className="flex justify-between mx-[100px] h-[70px] items-center">
         <div className="w-[180px]">
-          <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSW91-cIAIp0c7Bne3kPYS3tAuFjsoqsVviAg&s"
-            alt="logo"
-          />
+          <img src={LOGO} alt="logo" />
         </div>
         <div>
           <ul className="flex gap-5 text-xl items-center cursor-pointer">
@@ -75,6 +79,12 @@ function Header() {
             <li>About</li>
             <li>Contact</li>
             <li>Cart</li>
+            <button
+              onClick={UserLogin}
+              className="px-4 py-2 bg-orange-700 rounded-md text-white"
+            >
+              {login ? "Login" : "Logout"}
+            </button>
           </ul>
         </div>
       </div>
@@ -98,29 +108,52 @@ function Search() {
 }
 
 function Body() {
+  const [restaurant, setRestaurant] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(API_URL);
+      const result = await response.json();
+      setRestaurant(
+        result?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
+          ?.restaurants
+      );
+    };
+    fetchData();
+  }, []);
+
   return (
     <div className="mx-[100px]">
       <Search />
       <div className="">
-        <div className="my-8 grid grid-cols-4">
-          <div className="rounded">
-            <div className="rounded">
-              <img
-                className="rounded-md"
-                src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/${restaurant.cloudinaryImageId}`}
-                alt=""
-              />
-            </div>
-            <div className="mt-3 px-3 py-2">
-              <h2>{restaurant.name}</h2>
-              <p>
-                ⭐{restaurant.avgRatingString} - {restaurant.sla.slaString}
-              </p>
-              <p>{restaurant.cuisines[0]}</p>
-              <p>{restaurant.areaName}</p>
-            </div>
-          </div>
+        <div className="my-8 grid grid-cols-4 gap-5">
+          {restaurant.map((restaurant) => (
+            <RestaurantCard restaurant={restaurant} />
+          ))}
         </div>
+      </div>
+    </div>
+  );
+}
+
+function RestaurantCard({ restaurant }) {
+  return (
+    <div className="rounded">
+      <div className="rounded h-[300px]">
+        <img
+          className="rounded-xl card-img"
+          src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/${restaurant.info.cloudinaryImageId}`}
+          alt=""
+        />
+      </div>
+      <div className="mt-2 px-3 py-2">
+        <h2 className="font-medium text-xl mb-1">{restaurant.info.name}</h2>
+        <p className="font-medium">
+          ⭐{restaurant.info.avgRatingString} - {restaurant.info.slaString}
+        </p>
+        <p className="font-light text-slate-950">
+          {restaurant.info.cuisines[0]}
+        </p>
+        <p className="font-light text-slate-950">{restaurant.info.areaName}</p>
       </div>
     </div>
   );
