@@ -92,15 +92,20 @@ function Header() {
   );
 }
 
-function Search() {
+function Search({ onSearch, inputSearch, setInputSearch }) {
   return (
     <div className="mt-8 flex justify-between">
       <input
         className="px-5 py-3 w-[90%] border-2 border-slate-300 rounded-md"
         type="search"
         placeholder="Search restaurant"
+        value={inputSearch}
+        onChange={(e) => setInputSearch(e.target.value)}
       />
-      <button className="px-6 py-3 text-[18px] text-slate-50 rounded-md bg-orange-500 ">
+      <button
+        onClick={onSearch}
+        className="px-6 py-3 text-[18px] text-slate-50 rounded-md bg-orange-500 "
+      >
         Search
       </button>
     </div>
@@ -109,24 +114,56 @@ function Search() {
 
 function Body() {
   const [restaurant, setRestaurant] = useState([]);
+  const [filteredRestaurant, setFilteredRestaurant] = useState([]);
+  const [isLoading, setIsLoading] = useState("false");
+  const [inputSearch, setInputSearch] = useState("");
+
   useEffect(() => {
+    console.log("useEffect");
     const fetchData = async () => {
+      setIsLoading(true);
       const response = await fetch(API_URL);
       const result = await response.json();
+      console.log(result);
       setRestaurant(
+        result?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
+          ?.restaurants
+      );
+      setFilteredRestaurant(
         result?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
           ?.restaurants
       );
     };
     fetchData();
+    setIsLoading(false);
   }, []);
 
+  const handleSearch = () => {
+    const filteredRes = restaurant.filter((res) =>
+      res.info.name.toLowerCase().includes(inputSearch)
+    );
+    console.log(filteredRes);
+    setFilteredRestaurant(filteredRes);
+    // const filteredRes = restaurant.filter(
+    //   (res) => res.info.avgRatingString > 4.4
+    // );
+    // const filteredRes = restaurant.map((res) => res.info.avgRatingString);
+    // console.log(filteredRes);
+  };
+
+  console.log("Body");
+  if (isLoading)
+    return <h1 className="m-10 text-2xl text-slate-900">Loading...</h1>;
   return (
     <div className="mx-[100px]">
-      <Search />
+      <Search
+        inputSearch={inputSearch}
+        setInputSearch={setInputSearch}
+        onSearch={handleSearch}
+      />
       <div className="">
         <div className="my-8 grid grid-cols-4 gap-5">
-          {restaurant.map((restaurant) => (
+          {filteredRestaurant.map((restaurant) => (
             <RestaurantCard restaurant={restaurant} />
           ))}
         </div>
@@ -148,7 +185,8 @@ function RestaurantCard({ restaurant }) {
       <div className="mt-2 px-3 py-2">
         <h2 className="font-medium text-xl mb-1">{restaurant.info.name}</h2>
         <p className="font-medium">
-          ⭐{restaurant.info.avgRatingString} - {restaurant.info.slaString}
+          ⭐{restaurant.info.avgRatingString} -{" "}
+          {restaurant.info.sla.lastMileTravel}km
         </p>
         <p className="font-light text-slate-950">
           {restaurant.info.cuisines[0]}
