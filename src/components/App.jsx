@@ -92,22 +92,46 @@ function Header() {
   );
 }
 
-function Search({ onSearch, inputSearch, setInputSearch }) {
+function Search({
+  onSearch,
+  inputSearch,
+  setInputSearch,
+  onRating,
+  onDelivery,
+}) {
   return (
-    <div className="mt-8 flex justify-between">
-      <input
-        className="px-5 py-3 w-[90%] border-2 border-slate-300 rounded-md"
-        type="search"
-        placeholder="Search restaurant"
-        value={inputSearch}
-        onChange={(e) => setInputSearch(e.target.value)}
-      />
-      <button
-        onClick={onSearch}
-        className="px-6 py-3 text-[18px] text-slate-50 rounded-md bg-orange-500 "
+    <div className="">
+      <form
+        action=""
+        className="mt-8 flex justify-between"
+        onClick={(e) => e.preventDefault()}
       >
-        Search
-      </button>
+        <input
+          className="px-5 py-3 w-[70%] border-2 border-slate-300 rounded-md"
+          type="search"
+          placeholder="Search restaurant"
+          value={inputSearch}
+          onChange={(e) => setInputSearch(e.target.value)}
+        />
+        <button
+          onClick={onSearch}
+          className="px-6 py-3 text-[18px] text-slate-50 rounded-md bg-orange-500"
+        >
+          Search
+        </button>
+        <button
+          onClick={onRating}
+          className="px-6 py-3 text-[18px] text-slate-50 rounded-md bg-orange-500"
+        >
+          Rating 4+
+        </button>
+        <button
+          onClick={onDelivery}
+          className="px-6 py-3 text-[18px] text-slate-50 rounded-md bg-orange-500"
+        >
+          Fast Delivery
+        </button>
+      </form>
     </div>
   );
 }
@@ -139,16 +163,28 @@ function Body() {
   }, []);
 
   const handleSearch = () => {
-    const filteredRes = restaurant.filter((res) =>
-      res.info.name.toLowerCase().includes(inputSearch)
+    const filteredRes = restaurant.filter((restaurant) =>
+      restaurant.info.name.toLowerCase().includes(inputSearch.toLowerCase())
     );
-    console.log(filteredRes);
     setFilteredRestaurant(filteredRes);
-    // const filteredRes = restaurant.filter(
-    //   (res) => res.info.avgRatingString > 4.4
-    // );
-    // const filteredRes = restaurant.map((res) => res.info.avgRatingString);
-    // console.log(filteredRes);
+    console.log(filteredRes);
+    setInputSearch("");
+  };
+
+  const handleMostRating = () => {
+    const filteredRating = restaurant.filter(
+      (restaurant) => restaurant.info.avgRating > 4
+    );
+    console.log(filteredRating);
+    setFilteredRestaurant(filteredRating);
+  };
+
+  const handleFastDelivery = () => {
+    const filteredDelivery = restaurant.filter(
+      (restaurant) => restaurant.info.sla.deliveryTime < 35
+    );
+    console.log(filteredDelivery);
+    setFilteredRestaurant(filteredDelivery);
   };
 
   console.log("Body");
@@ -160,11 +196,13 @@ function Body() {
         inputSearch={inputSearch}
         setInputSearch={setInputSearch}
         onSearch={handleSearch}
+        onRating={handleMostRating}
+        onDelivery={handleFastDelivery}
       />
       <div className="">
         <div className="my-8 grid grid-cols-4 gap-5">
           {filteredRestaurant.map((restaurant) => (
-            <RestaurantCard restaurant={restaurant} />
+            <RestaurantCard key={restaurant.info.id} restaurant={restaurant} />
           ))}
         </div>
       </div>
